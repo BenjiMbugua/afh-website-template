@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-neutral antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-navy font-semibold;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-white font-semibold rounded-full hover:bg-orange-600 transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-navy text-white font-semibold rounded-full hover:bg-blue-900 transition-colors duration-200;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-navy transition-colors duration-200;
+  }
+
+  .section-heading {
+    @apply text-4xl md:text-5xl font-bold text-navy leading-tight;
+  }
+
+  .section-subheading {
+    @apply text-lg text-neutral leading-relaxed;
+  }
+}

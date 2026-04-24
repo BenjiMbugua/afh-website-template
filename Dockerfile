@@ -2,6 +2,7 @@
 FROM node:20-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
+COPY .npmrc ./
 RUN npm ci
 
 # Stage 2: Build the application
@@ -35,6 +36,7 @@ RUN addgroup --system --gid 1001 nodejs && \
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/.npmrc ./.npmrc
 COPY --from=builder /app/next.config.mjs ./next.config.mjs
 COPY --from=builder /app/src/payload.config.ts ./src/payload.config.ts
 

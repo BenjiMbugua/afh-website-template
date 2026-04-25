@@ -60,8 +60,43 @@ export interface SiteContent {
     description: string
     nearbyText: string
   }
+  theme: {
+    palette: {
+      primary: string
+      secondary: string
+      accent: string
+      background: string
+      text: string
+    }
+    typography: {
+      heading: string
+      body: string
+    }
+    styleTags: string[]
+    templateName: string | null
+  }
   gallery: {
     heading: string
+    slots: {
+      id: string
+      label: string
+      description: string
+      purpose: string
+      imageUrl: string | null
+      alt: string
+      priority: 'high' | 'medium' | 'low'
+    }[]
+  }
+  imagery: {
+    logoUrl: string | null
+    heroBackgroundUrl: string | null
+    peoplePhotography: {
+      id: string
+      label: string
+      imageUrl: string | null
+      alt: string
+      usage: string
+    }[]
   }
   trustChecklist: string[]
   footer: {
@@ -198,8 +233,108 @@ export const siteContent: SiteContent = {
     nearbyText: 'Our home is close to major medical centers — so coordinating with your loved one\'s medical team is straightforward.',
   },
 
+  theme: {
+    palette: {
+      primary: '#12355b',
+      secondary: '#325f74',
+      accent: '#d5a65a',
+      background: '#fcf7f1',
+      text: '#1f2937',
+    },
+    typography: {
+      heading: 'Cormorant Garamond',
+      body: 'Manrope',
+    },
+    styleTags: ['warm', 'editorial', 'conversion-focused', 'hospitality'],
+    templateName: 'AFH Signature',
+  },
+
   gallery: {
     heading: 'Inside Our Home',
+    slots: [
+      {
+        id: 'hero-caregiver',
+        label: 'Welcome moment',
+        description: 'A warm, reassuring photo of care and connection that sets the tone immediately.',
+        purpose: 'Immediate trust',
+        imageUrl: null,
+        alt: 'Caregiver welcoming a resident',
+        priority: 'high',
+      },
+      {
+        id: 'home-exterior',
+        label: 'Home exterior',
+        description: 'The residence and entry experience so families can picture arrival.',
+        purpose: 'Physical context',
+        imageUrl: null,
+        alt: 'Exterior of the adult family home',
+        priority: 'high',
+      },
+      {
+        id: 'living-space',
+        label: 'Common area',
+        description: 'The main shared space where residents spend time together.',
+        purpose: 'Home feel',
+        imageUrl: null,
+        alt: 'Common living area',
+        priority: 'high',
+      },
+      {
+        id: 'caregiver-team',
+        label: 'Caregiver portrait',
+        description: 'A genuine portrait that shows the human side of care.',
+        purpose: 'Human connection',
+        imageUrl: null,
+        alt: 'Caregiver portrait',
+        priority: 'high',
+      },
+      {
+        id: 'bedroom',
+        label: 'Resident bedroom',
+        description: 'A clean, personalizable room that communicates dignity and calm.',
+        purpose: 'Comfort and privacy',
+        imageUrl: null,
+        alt: 'Resident bedroom',
+        priority: 'medium',
+      },
+      {
+        id: 'daily-life',
+        label: 'Daily life',
+        description: 'Dining, activity, or outdoor moments that make the home feel lived in and warm.',
+        purpose: 'Routine and warmth',
+        imageUrl: null,
+        alt: 'Daily life in the home',
+        priority: 'medium',
+      },
+    ],
+  },
+
+  imagery: {
+    logoUrl: null,
+    heroBackgroundUrl: null,
+    peoplePhotography: [
+      {
+        id: 'caregiver-welcome',
+        label: 'Caregiver welcome portrait',
+        imageUrl: null,
+        alt: 'Caregiver welcoming a family',
+        usage: 'Hero and top-of-page trust signal',
+      },
+      {
+        id: 'resident-connection',
+        label: 'Resident and caregiver moment',
+        imageUrl: null,
+        alt: 'Resident and caregiver connection',
+        usage: 'Proof of warmth and lived experience',
+      },
+      {
+        id: 'family-tour',
+        label: 'Family tour conversation',
+        imageUrl: null,
+        alt: 'Family tour consultation',
+        usage: 'Consultation and conversion sections',
+      },
+    ],
   },
 
   trustChecklist: [

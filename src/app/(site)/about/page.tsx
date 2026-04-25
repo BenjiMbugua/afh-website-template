@@ -40,18 +40,30 @@ const ABOUT_SECTION: TextImageSectionType = {
   _type: 'textImageSection',
   _key: 'text-1',
   heading: `About ${business.legalName}`,
-  body: 'In Washington State, Memory Care is specialized care for individuals with Alzheimer\'s or other forms of dementia. We are fully certified by Washington DSHS and continuously up to date on all training and certifications. Our caregivers have specialized knowledge in dementia care techniques and provide structured, calm environments that help residents feel safe and oriented.',
+  body: `${pages.about.subheading} The environment, routines, and communication style are designed to help families feel informed and residents feel safe, known, and respected.`,
   imagePosition: 'right',
   backgroundColor: '#FFFAF5',
+  image: siteContent.gallery.slots.find((slot) => slot.id === 'living-space' || slot.id === 'home-exterior')?.imageUrl
+    ? {
+        url: siteContent.gallery.slots.find((slot) => slot.id === 'living-space' || slot.id === 'home-exterior')!.imageUrl!,
+        alt: siteContent.gallery.slots.find((slot) => slot.id === 'living-space' || slot.id === 'home-exterior')!.alt,
+      } as any
+    : undefined,
 }
 
 const COMMITMENT_SECTION: TextImageSectionType = {
   _type: 'textImageSection',
   _key: 'text-2',
   heading: 'What Sets Us Apart',
-  body: 'We are a small home — intentionally. Every resident gets consistent caregivers who know their routines, preferences, and family. We are not a large facility with rotating staff. We are UA Benefits accepted, hospice-coordinated, and have all standard home utilities included. There are no surprises in how we operate.',
+  body: 'We are a small home intentionally. That means more consistency, more direct communication, and a setting families can actually picture before they visit. The goal is not to feel institutional. It is to feel calm, polished, and deeply personal.',
   imagePosition: 'left',
   backgroundColor: '#ffffff',
+  image: siteContent.gallery.slots.find((slot) => slot.id === 'caregiver-team' || slot.id === 'daily-life')?.imageUrl
+    ? {
+        url: siteContent.gallery.slots.find((slot) => slot.id === 'caregiver-team' || slot.id === 'daily-life')!.imageUrl!,
+        alt: siteContent.gallery.slots.find((slot) => slot.id === 'caregiver-team' || slot.id === 'daily-life')!.alt,
+      } as any
+    : undefined,
 }
 
 const STATS: StatsBandSection = {

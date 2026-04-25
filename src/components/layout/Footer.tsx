@@ -9,21 +9,36 @@ interface FooterProps {
 
 export function Footer({ siteSettings, footerSettings }: FooterProps) {
   const columns = footerSettings?.columns ?? siteContent.footer.columns
-  const { business } = siteContent
+  const { business, imagery } = siteContent
   const copyright =
     footerSettings?.copyrightText ??
     `\u00A9 ${new Date().getFullYear()} ${business.legalName}. All rights reserved.`
 
   return (
-    <footer className="bg-navy text-white">
+    <footer
+      className="text-white"
+      style={{ background: 'linear-gradient(180deg, color-mix(in srgb, var(--theme-primary) 96%, black), color-mix(in srgb, var(--theme-secondary) 85%, black))' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Top row */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-white/10">
           {/* Brand column */}
           <div className="md:col-span-1">
-            <Link href="/" className="block mb-3">
-              <span className="text-white font-bold text-xl">{business.name}</span>
-              <span className="block text-white/60 text-xs tracking-wide">{business.type}</span>
+            <Link href="/" className="mb-3 flex items-center gap-3">
+              {imagery.logoUrl ? (
+                <img src={imagery.logoUrl} alt={`${business.name} logo`} className="h-12 w-12 rounded-xl bg-white object-contain p-1.5" />
+              ) : (
+                <div
+                  className="flex h-12 w-12 items-center justify-center rounded-xl text-lg font-semibold text-white"
+                  style={{ background: 'linear-gradient(135deg, var(--theme-accent), var(--theme-secondary))' }}
+                >
+                  {business.name.slice(0, 1)}
+                </div>
+              )}
+              <span>
+                <span className="text-white font-bold text-xl">{business.name}</span>
+                <span className="block text-white/60 text-xs tracking-wide">{business.type}</span>
+              </span>
             </Link>
             <p className="text-white/70 text-sm leading-relaxed">{siteSettings.tagline}</p>
           </div>

@@ -17,7 +17,7 @@ export const dynamic = 'force-dynamic'
 const { business, hero, pages } = siteContent
 
 export const metadata: Metadata = {
-  title: `${business.name} ${business.type} | Memory Care ${siteContent.address.city}, ${siteContent.address.state}`,
+  title: `${business.name} ${business.type} | ${siteContent.address.city}, ${siteContent.address.state}`,
   description: `${hero.subheading} Call ${business.phone}.`,
 }
 
@@ -71,11 +71,11 @@ export default function HomePage() {
     <>
       <HeroSection section={HERO} showTrustBadges />
       <TrustStrip />
+      <GalleryPlaceholder />
       <ServicesGrid section={SERVICES_SECTION} />
       <ProofBlock />
       <TestimonialsSection section={TESTIMONIALS} />
       <CareSpecialties />
-      <GalleryPlaceholder />
       <FAQSection section={FAQ_SECTION} />
       <LocalInfo />
       <CTABand section={CTA_BOTTOM} />

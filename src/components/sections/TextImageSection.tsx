@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { TextImageSection as TextImageSectionType } from '@/lib/payload/types'
 
@@ -37,13 +36,10 @@ export function TextImageSection({ section }: TextImageSectionProps) {
               <div className="relative">
                 {/* Offset decorative box */}
                 <div className="absolute -top-4 -left-4 w-full h-full rounded-2xl border-4 border-primary/30" />
-                <Image
+                <img
                   src={section.image.url}
                   alt={section.image.alt ?? section.heading}
-                  width={800}
-                  height={700}
                   className="relative z-10 rounded-2xl object-cover w-full"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
               </div>
             ) : (

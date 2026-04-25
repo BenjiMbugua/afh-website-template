@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Poppins } from 'next/font/google'
+import { Cormorant_Garamond, Manrope } from 'next/font/google'
 import '../globals.css'
 import { TopBar } from '@/components/layout/TopBar'
 import { Header } from '@/components/layout/Header'
@@ -7,10 +7,17 @@ import { Footer } from '@/components/layout/Footer'
 import { getSiteSettings, getNavigation, getFooterSettings } from '@/lib/payload/queries'
 import { siteContent } from '@/lib/siteContent'
 
-const poppins = Poppins({
+const headingFont = Cormorant_Garamond({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
-  variable: '--font-poppins',
+  variable: '--font-heading-default',
+  display: 'swap',
+})
+
+const bodyFont = Manrope({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-body-default',
   display: 'swap',
 })
 
@@ -65,10 +72,23 @@ export default async function SiteLayout({
 
   const site = siteSettings ?? FALLBACK_SITE
   const nav = navigation ?? FALLBACK_NAV
+  const palette = siteContent.theme.palette
+  const typography = siteContent.theme.typography
 
   return (
-    <html lang="en" className={poppins.variable}>
-      <body className="font-sans bg-white">
+    <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
+      <body
+        className="font-sans bg-white"
+        style={{
+          ['--theme-primary' as string]: palette.primary,
+          ['--theme-secondary' as string]: palette.secondary,
+          ['--theme-accent' as string]: palette.accent,
+          ['--theme-background' as string]: palette.background,
+          ['--theme-text' as string]: palette.text,
+          ['--theme-heading-font' as string]: `${typography.heading}, var(--font-heading-default), Georgia, serif`,
+          ['--theme-body-font' as string]: `${typography.body}, var(--font-body-default), system-ui, sans-serif`,
+        }}
+      >
         <TopBar />
         <Header siteSettings={site as any} navigation={nav as any} />
         <main>{children}</main>

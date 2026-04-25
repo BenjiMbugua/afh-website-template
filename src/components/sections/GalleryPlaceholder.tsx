@@ -1,99 +1,125 @@
 import { siteContent } from '@/lib/siteContent'
 
-const IMAGE_SLOTS = [
-  {
-    id: 'exterior',
-    label: 'Home Exterior',
-    description: 'Front of the home — families need to picture where their loved one will live',
-    purpose: 'Safety & familiarity',
-    placeholder: true,
-    aspectRatio: 'aspect-[16/9]',
-    priority: 'HIGH — needed before launch',
-  },
-  {
-    id: 'common-area',
-    label: 'Living / Common Area',
-    description: 'Main shared space where residents spend time together',
-    purpose: 'Home feel vs. institutional',
-    placeholder: true,
-    aspectRatio: 'aspect-[4/3]',
-    priority: 'HIGH — needed before launch',
-  },
-  {
-    id: 'bedroom',
-    label: 'Resident Bedroom',
-    description: 'A clean, comfortable, personalizable room',
-    purpose: 'Comfort and dignity',
-    placeholder: true,
-    aspectRatio: 'aspect-[4/3]',
-    priority: 'HIGH — needed before launch',
-  },
-  {
-    id: 'caregiver',
-    label: 'Caregiver / Staff',
-    description: 'Caregiver with resident or smiling at camera — human face of care',
-    purpose: 'Trust and warmth',
-    placeholder: true,
-    aspectRatio: 'aspect-[3/4]',
-    priority: 'HIGH — needed before launch',
-  },
-  {
-    id: 'outdoor',
-    label: 'Outdoor / Garden',
-    description: 'Outdoor space, porch, or garden area',
-    purpose: 'Quality of life signal',
-    placeholder: true,
-    aspectRatio: 'aspect-[16/9]',
-    priority: 'MEDIUM',
-  },
-  {
-    id: 'dining',
-    label: 'Dining / Kitchen',
-    description: 'Meal time or kitchen — families want to know about food and routine',
-    purpose: 'Daily life reassurance',
-    placeholder: true,
-    aspectRatio: 'aspect-[4/3]',
-    priority: 'MEDIUM',
-  },
-]
+function getCardSpan(index: number) {
+  if (index === 0) return 'md:col-span-2 md:row-span-2'
+  if (index === 3) return 'lg:col-span-2'
+  return ''
+}
 
 export function GalleryPlaceholder() {
-  const { gallery, business } = siteContent
+  const { gallery, business, imagery } = siteContent
+  const populated = gallery.slots.filter((slot) => slot.imageUrl)
+  const displaySlots = populated.length > 0 ? populated : gallery.slots
+  const highlightPhoto = imagery.peoplePhotography.find((item) => item.imageUrl)
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <h2 className="section-heading mb-3">{gallery.heading}</h2>
-          <p className="section-subheading max-w-2xl mx-auto">
-            We want families to picture the home before they visit. Photos coming soon.
-          </p>
-          <div className="mt-4 inline-block bg-yellow-100 border border-yellow-300 text-yellow-800 text-xs px-4 py-2 rounded-full font-medium">
-            CMS: Upload real photos to replace these placeholders before launch
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {IMAGE_SLOTS.map((slot) => (
-            <div key={slot.id} className={`${slot.aspectRatio} bg-gray-200 rounded-2xl flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-gray-300`}>
-              <div className="text-3xl opacity-40">📷</div>
-              <p className="font-semibold text-gray-600 text-sm text-center">{slot.label}</p>
-              <p className="text-gray-500 text-xs text-center">{slot.description}</p>
-              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${slot.priority.includes('HIGH') ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                {slot.priority}
-              </span>
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_340px] lg:items-start">
+          <div>
+            <div className="mb-8 max-w-3xl">
+              <p
+                className="mb-3 inline-flex rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.24em]"
+                style={{ background: 'color-mix(in srgb, var(--theme-accent) 18%, white)', color: 'var(--theme-primary)' }}
+              >
+                Facility Showcase
+              </p>
+              <h2 className="section-heading mb-4">{gallery.heading}</h2>
+              <p className="section-subheading">
+                Families choose faster when they can picture the home clearly. This gallery is designed to surface the exterior, shared spaces, bedrooms, and the human warmth of care.
+              </p>
             </div>
-          ))}
-        </div>
 
-        <div className="mt-10 text-center">
-          <p className="text-sm text-neutral mb-4">
-            Want to see the home in person?
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a href="/contact" className="btn-primary">Schedule a Tour</a>
-            <a href={business.phoneHref} className="btn-secondary">Call {business.phone}</a>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:auto-rows-[200px]">
+              {displaySlots.map((slot, index) => (
+                <article
+                  key={slot.id}
+                  className={`group relative overflow-hidden rounded-[26px] border border-black/5 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.08)] ${getCardSpan(index)}`}
+                >
+                  {slot.imageUrl ? (
+                    <>
+                      <img src={slot.imageUrl} alt={slot.alt} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/18 to-transparent" />
+                    </>
+                  ) : (
+                    <div
+                      className="flex h-full min-h-[200px] items-end p-6"
+                      style={{
+                        background:
+                          'linear-gradient(180deg, color-mix(in srgb, var(--theme-primary) 14%, white), color-mix(in srgb, var(--theme-secondary) 12%, white))',
+                      }}
+                    >
+                      <div className="rounded-2xl border border-dashed border-black/10 bg-white/70 p-4 backdrop-blur">
+                        <p className="text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: 'var(--theme-primary)' }}>
+                          Upload Needed
+                        </p>
+                        <p className="mt-2 text-sm font-medium text-slate-700">{slot.label}</p>
+                        <p className="mt-1 text-sm text-slate-500">{slot.description}</p>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-[11px] uppercase tracking-[0.24em] text-white/65">{slot.purpose}</p>
+                        <h3 className="mt-1 text-2xl font-semibold text-white">{slot.label}</h3>
+                        <p className="mt-1 max-w-md text-sm text-white/78">{slot.description}</p>
+                      </div>
+                      <span
+                        className="shrink-0 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em]"
+                        style={{
+                          background: slot.priority === 'high'
+                            ? 'color-mix(in srgb, var(--theme-accent) 82%, black)'
+                            : 'rgba(255,255,255,0.18)',
+                          color: slot.priority === 'high' ? '#111827' : '#fff',
+                        }}
+                      >
+                        {slot.priority}
+                      </span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
+
+          <aside className="rounded-[30px] border border-black/5 bg-white/90 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em]" style={{ color: 'var(--theme-primary)' }}>
+              Why imagery matters
+            </p>
+            <h3 className="mt-3 text-3xl font-semibold">Real visuals reduce uncertainty for families.</h3>
+            <p className="mt-4 text-sm leading-7 text-slate-600">
+              The strongest AFH websites do not rely on generic stock photos alone. They blend polished people imagery with honest facility photos so families can feel the tone of care and the reality of the home.
+            </p>
+
+            {highlightPhoto?.imageUrl ? (
+              <img
+                src={highlightPhoto.imageUrl}
+                alt={highlightPhoto.alt}
+                className="mt-6 h-56 w-full rounded-[24px] object-cover"
+              />
+            ) : null}
+
+            <div className="mt-6 space-y-3">
+              {siteContent.trustChecklist.slice(0, 4).map((item) => (
+                <div key={item} className="flex items-start gap-3 rounded-2xl bg-slate-50 px-4 py-3">
+                  <span
+                    className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white"
+                    style={{ background: 'var(--theme-secondary)' }}
+                  >
+                    ✓
+                  </span>
+                  <p className="text-sm leading-6 text-slate-700">{item}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="/contact" className="btn-primary">Schedule a Tour</a>
+              <a href={business.phoneHref} className="btn-secondary">Call {business.phone}</a>
+            </div>
+          </aside>
         </div>
       </div>
     </section>

@@ -3,37 +3,69 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --theme-primary: #12355b;
+    --theme-secondary: #325f74;
+    --theme-accent: #d5a65a;
+    --theme-background: #fcf7f1;
+    --theme-text: #1f2937;
+    --theme-heading-font: "Cormorant Garamond", Georgia, serif;
+    --theme-body-font: "Manrope", "Poppins", system-ui, sans-serif;
+  }
+
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply text-neutral antialiased;
+    color: var(--theme-text);
+    font-family: var(--theme-body-font);
+    background:
+      radial-gradient(circle at top left, color-mix(in srgb, var(--theme-accent) 18%, transparent), transparent 28%),
+      radial-gradient(circle at top right, color-mix(in srgb, var(--theme-primary) 10%, transparent), transparent 30%),
+      linear-gradient(180deg, var(--theme-background) 0%, #fff 52%, var(--theme-background) 100%);
+    @apply antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-navy font-semibold;
+    color: var(--theme-primary);
+    font-family: var(--theme-heading-font);
+    @apply font-semibold;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-white font-semibold rounded-full hover:bg-orange-600 transition-colors duration-200;
+    background: var(--theme-primary);
+    @apply inline-flex items-center justify-center px-6 py-3 text-white font-semibold rounded-full transition-all duration-200;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.06);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-navy text-white font-semibold rounded-full hover:bg-blue-900 transition-colors duration-200;
+    background: var(--theme-secondary);
+    @apply inline-flex items-center justify-center px-6 py-3 text-white font-semibold rounded-full transition-all duration-200;
+  }
+
+  .btn-secondary:hover {
+    filter: brightness(1.04);
+    transform: translateY(-1px);
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-navy transition-colors duration-200;
+    border-color: rgba(255, 255, 255, 0.82);
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 text-white font-semibold rounded-full transition-colors duration-200;
   }
 
   .section-heading {
-    @apply text-4xl md:text-5xl font-bold text-navy leading-tight;
+    @apply text-4xl md:text-5xl font-bold leading-tight;
   }
 
   .section-subheading {
-    @apply text-lg text-neutral leading-relaxed;
+    color: color-mix(in srgb, var(--theme-text) 78%, white);
+    @apply text-lg leading-relaxed;
   }
 }

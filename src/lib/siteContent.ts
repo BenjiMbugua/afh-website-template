@@ -89,6 +89,7 @@ export interface SiteContent {
   }
   imagery: {
     logoUrl: string | null
+    faviconUrl: string | null
     heroBackgroundUrl: string | null
     peoplePhotography: {
       id: string
@@ -311,6 +312,7 @@ export const siteContent: SiteContent = {
 
   imagery: {
     logoUrl: null,
+    faviconUrl: null,
     heroBackgroundUrl: null,
     peoplePhotography: [
       {

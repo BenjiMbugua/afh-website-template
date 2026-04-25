@@ -28,6 +28,13 @@ export const metadata: Metadata = {
   },
   description: `${siteContent.business.tagline}. Specializing in Alzheimer's, dementia, and post-stroke care. UA Benefits accepted.`,
   keywords: siteContent.seo.keywords,
+  icons: siteContent.imagery.faviconUrl
+    ? {
+        icon: [{ url: siteContent.imagery.faviconUrl }],
+        shortcut: [{ url: siteContent.imagery.faviconUrl }],
+        apple: [{ url: siteContent.imagery.faviconUrl }],
+      }
+    : undefined,
   openGraph: {
     type: 'website',
     locale: 'en_US',

@@ -9,8 +9,10 @@ import { GalleryPlaceholder } from '@/components/sections/GalleryPlaceholder'
 import { FAQSection } from '@/components/sections/FAQSection'
 import { LocalInfo } from '@/components/sections/LocalInfo'
 import { CTABand } from '@/components/sections/CTABand'
+import { ContactSection } from '@/components/sections/ContactSection'
 import { siteContent } from '@/lib/siteContent'
-import type { HeroSection as HeroSectionType, ServicesGridSection, TestimonialsSection as TSection, CTABandSection, FAQSection as FAQSectionType } from '@/lib/payload/types'
+import { isSecuritySite } from '@/lib/siteKind'
+import type { HeroSection as HeroSectionType, ServicesGridSection, TestimonialsSection as TSection, CTABandSection, FAQSection as FAQSectionType, ContactSection as ContactSectionType } from '@/lib/payload/types'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,29 +46,52 @@ const SERVICES_SECTION: ServicesGridSection = {
 const TESTIMONIALS: TSection = {
   _type: 'testimonialsSection',
   _key: 'testimonials-1',
-  heading: 'What Families Are Saying',
+  heading: isSecuritySite ? 'What Clients Are Saying' : 'What Families Are Saying',
   testimonials: [],
 }
 
 const FAQ_SECTION: FAQSectionType = {
   _type: 'faqSection',
   _key: 'faq-1',
-  heading: 'Questions Families Ask First',
+  heading: isSecuritySite ? 'Security Questions Clients Ask First' : 'Questions Families Ask First',
   faqs: [],
 }
 
 const CTA_BOTTOM: CTABandSection = {
   _type: 'ctaBandSection',
   _key: 'cta-1',
-  heading: 'Ready to Talk About Care?',
-  subheading: `No forms to fill out right now. Just call. ${hero.responsePromise}.`,
+  heading: isSecuritySite ? 'Need Reliable Security Coverage?' : 'Ready to Talk About Care?',
+  subheading: isSecuritySite ? 'Call or send the coverage details. We will respond with a clear next step.' : `No forms to fill out right now. Just call. ${hero.responsePromise}.`,
   primaryCTAText: `Call ${business.phone}`,
   primaryCTAHref: business.phoneHref,
-  secondaryCTAText: 'Or fill out a contact form',
+  secondaryCTAText: isSecuritySite ? 'Request coverage' : 'Or fill out a contact form',
   secondaryCTAHref: '/contact',
+  backgroundColor: isSecuritySite ? '#080b11' : undefined,
+}
+
+const CONTACT_SECTION: ContactSectionType = {
+  _type: 'contactSection',
+  _key: 'contact-1',
+  heading: pages.contact.heading,
+  subheading: pages.contact.subheading,
+  showForm: true,
 }
 
 export default function HomePage() {
+  if (isSecuritySite) {
+    return (
+      <>
+        <HeroSection section={HERO} showTrustBadges />
+        <TrustStrip />
+        <GalleryPlaceholder />
+        <ServicesGrid section={SERVICES_SECTION} />
+        <ProofBlock />
+        <ContactSection section={CONTACT_SECTION} />
+        <CTABand section={CTA_BOTTOM} />
+      </>
+    )
+  }
+
   return (
     <>
       <HeroSection section={HERO} showTrustBadges />

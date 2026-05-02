@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { isSecuritySite } from '@/lib/siteKind'
 import type { NavItem } from '@/lib/payload/types'
 
 interface NavigationProps {
@@ -21,7 +22,11 @@ export function Navigation({ items, phone }: NavigationProps) {
             <Link
               key={item.href}
               href={item.href}
-              className="px-4 py-2 text-sm font-medium text-navy hover:text-primary transition-colors"
+              className={
+                isSecuritySite
+                  ? 'px-4 py-2 text-sm font-medium text-white/76 hover:text-white transition-colors'
+                  : 'px-4 py-2 text-sm font-medium text-navy hover:text-primary transition-colors'
+              }
             >
               {item.label}
             </Link>
@@ -31,7 +36,7 @@ export function Navigation({ items, phone }: NavigationProps) {
 
       {/* Mobile hamburger */}
       <button
-        className="md:hidden p-2 text-navy"
+        className={isSecuritySite ? 'md:hidden p-2 text-white' : 'md:hidden p-2 text-navy'}
         aria-label="Open menu"
         onClick={() => setOpen(true)}
       >

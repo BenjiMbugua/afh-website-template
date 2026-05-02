@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { isSecuritySite } from '@/lib/siteKind'
 
 interface ContactFormProps {
   phone: string
@@ -59,7 +60,7 @@ export function ContactForm({ phone, phoneHref }: ContactFormProps) {
 
   if (status === 'success') {
     return (
-      <div className="bg-white rounded-2xl p-8 shadow-sm flex flex-col items-center justify-center gap-4 min-h-[300px]">
+      <div className={isSecuritySite ? 'bg-white rounded-md p-8 shadow-sm flex flex-col items-center justify-center gap-4 min-h-[300px]' : 'bg-white rounded-2xl p-8 shadow-sm flex flex-col items-center justify-center gap-4 min-h-[300px]'}>
         <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
           <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -81,8 +82,8 @@ export function ContactForm({ phone, phoneHref }: ContactFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-sm space-y-5">
-      <h3 className="text-navy font-bold text-xl mb-2">Request a Free Consultation</h3>
+    <form onSubmit={handleSubmit} className={isSecuritySite ? 'bg-white rounded-md border border-slate-200 p-8 shadow-[0_20px_50px_rgba(15,23,42,0.08)] space-y-5' : 'bg-white rounded-2xl p-8 shadow-sm space-y-5'}>
+      <h3 className="text-navy font-bold text-xl mb-2">{isSecuritySite ? 'Request Security Coverage' : 'Request a Free Consultation'}</h3>
 
       <div>
         <label htmlFor="name" className="block text-sm font-semibold text-navy mb-1">
@@ -141,8 +142,17 @@ export function ContactForm({ phone, phoneHref }: ContactFormProps) {
         >
           <option value="">Select an option</option>
           <option value="google">Google Search</option>
-          <option value="healthcare">Referral from Healthcare Provider</option>
-          <option value="family">Family / Friend Referral</option>
+          {isSecuritySite ? (
+            <>
+              <option value="referral">Professional Referral</option>
+              <option value="word-of-mouth">Word of Mouth</option>
+            </>
+          ) : (
+            <>
+              <option value="healthcare">Referral from Healthcare Provider</option>
+              <option value="family">Family / Friend Referral</option>
+            </>
+          )}
           <option value="other">Other</option>
         </select>
       </div>
@@ -157,7 +167,7 @@ export function ContactForm({ phone, phoneHref }: ContactFormProps) {
           value={form.message}
           onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
           className="w-full rounded-lg border border-gray-200 px-4 py-3 text-sm text-navy placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition resize-none"
-          placeholder="Tell us about your loved one's care needs..."
+          placeholder={isSecuritySite ? 'Tell us what needs protection, timing, site type, and coverage goals...' : "Tell us about your loved one's care needs..."}
         />
       </div>
 

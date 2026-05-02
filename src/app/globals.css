@@ -27,6 +27,11 @@
     @apply antialiased;
   }
 
+  body[data-site-kind='security'] {
+    background:
+      linear-gradient(180deg, #05070b 0%, #0a1220 28%, #f7f7f4 28%, #fff 72%, #080b11 100%);
+  }
+
   h1, h2, h3, h4, h5, h6 {
     color: var(--theme-primary);
     font-family: var(--theme-heading-font);
@@ -58,6 +63,23 @@
   .btn-outline {
     border-color: rgba(255, 255, 255, 0.82);
     @apply inline-flex items-center justify-center px-6 py-3 border-2 text-white font-semibold rounded-full transition-colors duration-200;
+  }
+
+  body[data-site-kind='security'] .btn-primary {
+    background: linear-gradient(135deg, var(--theme-accent), color-mix(in srgb, var(--theme-accent) 72%, #111827));
+    color: #07090d;
+    border-radius: 0.375rem;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+  }
+
+  body[data-site-kind='security'] .btn-secondary,
+  body[data-site-kind='security'] .btn-outline {
+    border-radius: 0.375rem;
+  }
+
+  body[data-site-kind='security'] .btn-outline {
+    border-color: color-mix(in srgb, var(--theme-accent) 72%, white);
+    color: #fff;
   }
 
   .section-heading {

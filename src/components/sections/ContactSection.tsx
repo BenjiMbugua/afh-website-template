@@ -1,6 +1,8 @@
+import { Reveal } from '@/components/motion/Reveal'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { WhatHappensNext } from './WhatHappensNext'
 import { siteContent } from '@/lib/siteContent'
+import { isSecuritySite } from '@/lib/siteKind'
 import type { ContactSection as ContactSectionType } from '@/lib/payload/types'
 
 interface ContactSectionProps {
@@ -11,14 +13,14 @@ export function ContactSection({ section }: ContactSectionProps) {
   const { business, address, trustChecklist } = siteContent
 
   return (
-    <section className="py-20 bg-white">
+    <section id="contact" className={isSecuritySite ? 'py-20 bg-[#f7f7f4]' : 'py-20 bg-white'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
+        <Reveal className="text-center mb-14">
           <h2 className="section-heading mb-4">{section.heading}</h2>
           {section.subheading && (
             <p className="section-subheading max-w-2xl mx-auto">{section.subheading}</p>
           )}
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact details */}
@@ -82,11 +84,11 @@ export function ContactSection({ section }: ContactSectionProps) {
             </div>
 
             {/* Trust checklist */}
-            <div className="bg-cream rounded-2xl p-6">
-              <h4 className="text-navy font-semibold text-sm uppercase tracking-wide mb-4">Why families choose {business.name}</h4>
+            <div className={isSecuritySite ? 'bg-[#080b11] rounded-md p-6' : 'bg-cream rounded-2xl p-6'}>
+              <h4 className={isSecuritySite ? 'text-white font-semibold text-sm uppercase tracking-wide mb-4' : 'text-navy font-semibold text-sm uppercase tracking-wide mb-4'}>{isSecuritySite ? `Why clients choose ${business.name}` : `Why families choose ${business.name}`}</h4>
               <ul className="space-y-2">
                 {trustChecklist.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-neutral">
+                  <li key={item} className={isSecuritySite ? 'flex items-center gap-2 text-sm text-white/72' : 'flex items-center gap-2 text-sm text-neutral'}>
                     <svg className="w-4 h-4 text-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>

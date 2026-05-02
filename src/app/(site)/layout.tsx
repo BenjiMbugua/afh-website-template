@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { getSiteSettings, getNavigation, getFooterSettings } from '@/lib/payload/queries'
 import { siteContent } from '@/lib/siteContent'
+import { isSecuritySite, siteKind } from '@/lib/siteKind'
 
 const headingFont = Cormorant_Garamond({
   subsets: ['latin'],
@@ -23,10 +24,14 @@ const bodyFont = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteContent.business.name} ${siteContent.business.type} | Memory Care ${siteContent.address.city}, ${siteContent.address.state}`,
+    default: isSecuritySite
+      ? `${siteContent.business.name} | Security & Protection Services`
+      : `${siteContent.business.name} ${siteContent.business.type} | ${siteContent.address.city}, ${siteContent.address.state}`,
     template: `%s | ${siteContent.business.name} ${siteContent.business.type}`,
   },
-  description: `${siteContent.business.tagline}. Specializing in Alzheimer's, dementia, and post-stroke care. UA Benefits accepted.`,
+  description: isSecuritySite
+    ? `${siteContent.business.tagline || siteContent.hero.subheading} Call ${siteContent.business.phone} for professional security coverage.`
+    : `${siteContent.business.tagline}. Call ${siteContent.business.phone} to learn more.`,
   keywords: siteContent.seo.keywords,
   icons: siteContent.imagery.faviconUrl
     ? {
@@ -86,6 +91,7 @@ export default async function SiteLayout({
     <html lang="en" className={`${headingFont.variable} ${bodyFont.variable}`}>
       <body
         className="font-sans bg-white"
+        data-site-kind={siteKind}
         style={{
           ['--theme-primary' as string]: palette.primary,
           ['--theme-secondary' as string]: palette.secondary,

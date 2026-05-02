@@ -1,4 +1,6 @@
 import { ServiceCard } from '@/components/ui/ServiceCard'
+import { Reveal } from '@/components/motion/Reveal'
+import { isSecuritySite } from '@/lib/siteKind'
 import type { ServicesGridSection, Service } from '@/lib/payload/types'
 
 const FALLBACK_SERVICES: Service[] = [
@@ -10,26 +12,30 @@ const FALLBACK_SERVICES: Service[] = [
   { id: '6', title: 'Post Stroke Care', slug: 'post-stroke-care', shortDescription: 'Specialized care for stroke survivors including medication management.', features: ['Ensuring timely intake of prescribed medication', 'Monitoring for side effects or missed doses'], accentColor: '#e53796', order: 6 },
 ]
 
+const SECURITY_FALLBACK_SERVICES: Service[] = [
+  { id: 's1', title: 'Security Officers', slug: 'security-officers', shortDescription: 'Professional on-site officers for properties, businesses, construction sites, and high-visibility coverage.', features: ['Uniformed or plain-clothes presence', 'Access control and visitor screening', 'Incident observation and reporting'], accentColor: '#c9a24b', order: 1 },
+  { id: 's2', title: 'Mobile Patrol', slug: 'mobile-patrol', shortDescription: 'Marked patrol coverage that keeps locations visible, checked, and documented after hours.', features: ['Scheduled patrol routes', 'Lock-up and perimeter checks', 'Rapid escalation when needed'], accentColor: '#c9a24b', order: 2 },
+  { id: 's3', title: 'Event Security', slug: 'event-security', shortDescription: 'Crowd-aware protection for private events, venues, access points, and guest movement.', features: ['Entry control and line management', 'De-escalation support', 'Coordination with organizers'], accentColor: '#c9a24b', order: 3 },
+]
+
 interface ServicesGridProps {
   section: ServicesGridSection
 }
 
 export function ServicesGrid({ section }: ServicesGridProps) {
-  const services = section.services && section.services.length > 0 ? section.services : FALLBACK_SERVICES
+  const services = section.services && section.services.length > 0 ? section.services : isSecuritySite ? SECURITY_FALLBACK_SERVICES : FALLBACK_SERVICES
 
   return (
-    <section className="py-20 bg-white">
+    <section id="services" className={isSecuritySite ? 'py-20 bg-[#f7f7f4]' : 'py-20 bg-white'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-14">
+        <Reveal className="text-center mb-14">
           <h2 className="section-heading mb-4">{section.heading}</h2>
           {section.subheading && (
             <p className="section-subheading max-w-2xl mx-auto">{section.subheading}</p>
           )}
-        </div>
+        </Reveal>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={isSecuritySite ? 'grid grid-cols-1 gap-5 md:grid-cols-3' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'}>
           {services.map((service) => (
             <ServiceCard key={service.id} service={service} />
           ))}

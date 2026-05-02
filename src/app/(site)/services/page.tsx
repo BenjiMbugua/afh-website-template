@@ -8,6 +8,7 @@ import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { FAQSection } from '@/components/sections/FAQSection'
 import { CTABand } from '@/components/sections/CTABand'
 import { siteContent } from '@/lib/siteContent'
+import { isSecuritySite } from '@/lib/siteKind'
 import type {
   HeroSection as HeroSectionType,
   ServicesGridSection,
@@ -21,16 +22,20 @@ export const dynamic = 'force-dynamic'
 const { business, pages } = siteContent
 
 export const metadata: Metadata = {
-  title: `${pages.services.title} | ${business.name} — Memory Care ${siteContent.address.city} ${siteContent.address.state}`,
-  description: `Personal care, memory care, post-stroke support, respite, and more in ${siteContent.address.city}, ${siteContent.address.state}. UA Benefits accepted. See if ${business.name} is the right fit.`,
+  title: isSecuritySite
+    ? `${pages.services.title} | ${business.name} Security Services`
+    : `${pages.services.title} | ${business.name} — ${siteContent.address.city} ${siteContent.address.state}`,
+  description: isSecuritySite
+    ? `Security officers, mobile patrol, event protection, and access control from ${business.name}.`
+    : `${business.name} services in ${siteContent.address.city}, ${siteContent.address.state}. See if ${business.name} is the right fit.`,
 }
 
 const HERO: HeroSectionType = {
   _type: 'heroSection',
   _key: 'hero-1',
-  heading: 'Care Built Around Your Loved One',
-  subheading: 'Six specialized programs — not a one-size-fits-all approach. We start with your family\'s specific needs.',
-  ctaText: 'Schedule a Consultation',
+  heading: isSecuritySite ? 'Security Coverage Built Around the Site' : 'Care Built Around Your Loved One',
+  subheading: isSecuritySite ? 'Focused protection services for businesses, events, properties, and operations that need a visible professional presence.' : 'Six specialized programs — not a one-size-fits-all approach. We start with your family\'s specific needs.',
+  ctaText: isSecuritySite ? 'Request Coverage' : 'Schedule a Consultation',
   ctaHref: '/contact',
   secondaryCTAText: `Call ${business.phone}`,
   secondaryCTAHref: business.phoneHref,
@@ -41,14 +46,14 @@ const SERVICES_SECTION: ServicesGridSection = {
   _type: 'servicesGridSection',
   _key: 'services-1',
   heading: 'What We Offer',
-  subheading: 'Each service is tailored to the individual — not bundled into a fixed package.',
+  subheading: isSecuritySite ? 'Protection services are scoped around risk, site type, schedule, visibility, and reporting needs.' : 'Each service is tailored to the individual — not bundled into a fixed package.',
   services: [],
 }
 
 const TESTIMONIALS: TSection = {
   _type: 'testimonialsSection',
   _key: 'testimonials-1',
-  heading: 'Families Share Their Experience',
+  heading: isSecuritySite ? 'Clients Share Their Experience' : 'Families Share Their Experience',
   testimonials: [],
 }
 
@@ -62,11 +67,11 @@ const FAQ: FAQSectionType = {
 const CTA_BOTTOM: CTABandSection = {
   _type: 'ctaBandSection',
   _key: 'cta-1',
-  heading: 'Have Questions About a Specific Need?',
-  subheading: 'Call us and we will be honest about what we can provide — and when another option may be better.',
+  heading: isSecuritySite ? 'Have Questions About Coverage?' : 'Have Questions About a Specific Need?',
+  subheading: isSecuritySite ? 'Call us and we will clarify the best coverage path for your site, event, or operation.' : 'Call us and we will be honest about what we can provide — and when another option may be better.',
   primaryCTAText: `Call ${business.phone}`,
   primaryCTAHref: business.phoneHref,
-  secondaryCTAText: 'Schedule a consultation',
+  secondaryCTAText: isSecuritySite ? 'Request coverage' : 'Schedule a consultation',
   secondaryCTAHref: '/contact',
 }
 
@@ -78,7 +83,7 @@ export default function ServicesPage() {
       <ServicesGrid section={SERVICES_SECTION} />
       <CareSpecialties />
       <GoodFitBlock />
-      <TestimonialsSection section={TESTIMONIALS} />
+      {!isSecuritySite && <TestimonialsSection section={TESTIMONIALS} />}
       <FAQSection section={FAQ} />
       <CTABand section={CTA_BOTTOM} />
     </>

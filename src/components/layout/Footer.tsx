@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { siteContent } from '@/lib/siteContent'
+import { isSecuritySite } from '@/lib/siteKind'
 import type { SiteSettings, FooterSettings } from '@/lib/payload/types'
 
 interface FooterProps {
@@ -26,7 +27,11 @@ export function Footer({ siteSettings, footerSettings }: FooterProps) {
           <div className="md:col-span-1">
             <Link href="/" className="mb-3 flex items-center gap-3">
               {imagery.logoUrl ? (
-                <img src={imagery.logoUrl} alt={`${business.name} logo`} className="h-12 w-12 rounded-xl bg-white object-contain p-1.5" />
+                <img
+                  src={imagery.logoUrl}
+                  alt={`${business.name} logo`}
+                  className={isSecuritySite ? 'h-14 w-auto max-w-[170px] bg-transparent object-contain' : 'h-12 w-12 rounded-xl bg-white object-contain p-1.5'}
+                />
               ) : (
                 <div
                   className="flex h-12 w-12 items-center justify-center rounded-xl text-lg font-semibold text-white"
@@ -108,7 +113,9 @@ export function Footer({ siteSettings, footerSettings }: FooterProps) {
         <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/50 text-sm">{copyright}</p>
           <div className="flex items-center gap-4">
-            <span className="text-white/30 text-xs">State Licensed Memory Care Facility</span>
+            <span className="text-white/30 text-xs">
+              {isSecuritySite ? 'Professional Security & Protection Services' : 'State Licensed Memory Care Facility'}
+            </span>
           </div>
         </div>
       </div>

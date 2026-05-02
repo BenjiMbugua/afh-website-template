@@ -1,5 +1,6 @@
 import type { FAQSection as FAQSectionType, FAQItem } from '@/lib/payload/types'
 import { siteContent } from '@/lib/siteContent'
+import { isSecuritySite } from '@/lib/siteKind'
 
 interface FAQSectionProps {
   section: FAQSectionType
@@ -12,7 +13,7 @@ export function FAQSection({ section }: FAQSectionProps) {
       : siteContent.faqs
 
   return (
-    <section className="py-20 bg-white">
+    <section className={isSecuritySite ? 'py-20 bg-[#f7f7f4]' : 'py-20 bg-white'}>
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <h2 className="section-heading mb-4">{section.heading}</h2>
@@ -21,7 +22,7 @@ export function FAQSection({ section }: FAQSectionProps) {
           {faqs.map((faq) => (
             <details
               key={faq.id}
-              className="group border border-gray-200 rounded-2xl overflow-hidden"
+              className={isSecuritySite ? 'group border border-gray-200 rounded-md overflow-hidden bg-white' : 'group border border-gray-200 rounded-2xl overflow-hidden'}
             >
               <summary className="flex items-center justify-between px-6 py-5 cursor-pointer list-none select-none hover:bg-gray-50">
                 <span className="font-semibold text-navy text-base pr-4">{faq.question}</span>

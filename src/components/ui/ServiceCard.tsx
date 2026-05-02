@@ -1,3 +1,5 @@
+import { Reveal } from '@/components/motion/Reveal'
+import { isSecuritySite } from '@/lib/siteKind'
 import type { Service } from '@/lib/payload/types'
 
 interface ServiceCardProps {
@@ -8,11 +10,16 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const accent = service.accentColor ?? '#FF6734'
 
   return (
-    <div
-      className="relative bg-white rounded-t-[200px] rounded-b-2xl p-8 flex flex-col gap-4 transition-shadow hover:shadow-lg"
-      style={{ border: `4px solid ${accent}` }}
+    <Reveal
+      as="article"
+      className={
+        isSecuritySite
+          ? 'relative flex min-h-[280px] flex-col gap-4 border border-slate-200 bg-white p-7 shadow-[0_18px_45px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:border-[var(--theme-accent)] hover:shadow-[0_24px_60px_rgba(15,23,42,0.16)]'
+          : 'relative bg-white rounded-t-[200px] rounded-b-2xl p-8 flex flex-col gap-4 transition-shadow hover:shadow-lg'
+      }
+      style={isSecuritySite ? { borderTop: `3px solid ${accent}` } : { border: `4px solid ${accent}` }}
     >
-      <h3 className="text-navy font-semibold text-xl mt-4">{service.title}</h3>
+      <h3 className={isSecuritySite ? 'font-semibold text-xl leading-tight text-[#0b1220]' : 'text-navy font-semibold text-xl mt-4'}>{service.title}</h3>
       <p className="text-neutral text-sm leading-relaxed">{service.shortDescription}</p>
       {service.features.length > 0 && (
         <ul className="mt-2 space-y-2">
@@ -32,6 +39,6 @@ export function ServiceCard({ service }: ServiceCardProps) {
           ))}
         </ul>
       )}
-    </div>
+    </Reveal>
   )
 }

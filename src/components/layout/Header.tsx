@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Navigation } from './Navigation'
 import { siteContent } from '@/lib/siteContent'
+import { isSecuritySite } from '@/lib/siteKind'
 import type { SiteSettings, Navigation as NavigationType } from '@/lib/payload/types'
 
 interface HeaderProps {
@@ -13,7 +14,13 @@ export function Header({ siteSettings, navigation }: HeaderProps) {
   const { business, hero, imagery } = siteContent
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/60 bg-white/88 shadow-sm backdrop-blur-xl">
+    <header
+      className={
+        isSecuritySite
+          ? 'sticky top-0 z-40 border-b border-white/10 bg-[#07090d]/92 shadow-xl backdrop-blur-xl'
+          : 'sticky top-0 z-40 border-b border-white/60 bg-white/88 shadow-sm backdrop-blur-xl'
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo / Business name */}
@@ -22,7 +29,11 @@ export function Header({ siteSettings, navigation }: HeaderProps) {
               <img
                 src={imagery.logoUrl}
                 alt={`${business.name} logo`}
-                className="h-11 w-11 rounded-xl border border-black/5 bg-white object-contain p-1 shadow-sm"
+                className={
+                  isSecuritySite
+                    ? 'h-14 w-auto max-w-[170px] bg-transparent object-contain'
+                    : 'h-11 w-11 rounded-xl border border-black/5 bg-white object-contain p-1 shadow-sm'
+                }
               />
             ) : (
               <div
@@ -33,10 +44,16 @@ export function Header({ siteSettings, navigation }: HeaderProps) {
               </div>
             )}
             <div className="flex flex-col leading-tight">
-              <span className="text-lg font-bold leading-none" style={{ color: 'var(--theme-primary)' }}>
+                <span
+                  className="text-lg font-bold leading-none"
+                  style={{ color: isSecuritySite ? '#fff' : 'var(--theme-primary)' }}
+                >
                 {business.name}
               </span>
-              <span className="text-xs font-medium tracking-wide" style={{ color: 'color-mix(in srgb, var(--theme-text) 72%, white)' }}>
+              <span
+                className="text-xs font-medium tracking-wide"
+                style={{ color: isSecuritySite ? 'rgba(255,255,255,0.62)' : 'color-mix(in srgb, var(--theme-text) 72%, white)' }}
+              >
                 {business.type}
               </span>
             </div>
@@ -51,7 +68,7 @@ export function Header({ siteSettings, navigation }: HeaderProps) {
               <a
                 href={`tel:${siteSettings.phone.replace(/\D/g, '')}`}
                 className="flex items-center gap-1 text-sm font-medium transition-colors"
-                style={{ color: 'var(--theme-primary)' }}
+                style={{ color: isSecuritySite ? 'rgba(255,255,255,0.86)' : 'var(--theme-primary)' }}
               >
                 <svg className="w-4 h-4" style={{ color: 'var(--theme-accent)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
